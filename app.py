@@ -1,3 +1,4 @@
+from flask_cors import CORS
 from flask import Flask, request, jsonify
 from langchain_openai import OpenAIEmbeddings, OpenAI
 from langchain.vectorstores import FAISS
@@ -9,6 +10,7 @@ import os
 import fitz  # PyMuPDF
 import re
 app = Flask(__name__)
+CORS(app)
 
 # os.environ["OPENAI_API_KEY"] = "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"
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
@@ -31,8 +33,8 @@ embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-
 db = FAISS.from_texts(texts, embeddings)
 
 # llm = OpenAI(temperature=0)
-llm = HuggingFaceHub(repo_id="meta-llama/Meta-Llama-3-8B", model_kwargs={"temperature": 0.2,"max_length": 2,
-    "top_p": 0.2}) #meta-llama/Meta-Llama-3-8B
+llm = HuggingFaceHub(repo_id="meta-llama/Meta-Llama-3-8B", model_kwargs={"temperature": 0.5,"max_length": 200,
+    "top_p": 0.3}) #meta-llama/Meta-Llama-3-8B
 qa_chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=db.as_retriever(),verbose=False)
 @app.route("/ask", methods=["POST"])
 def ask():
