@@ -19,9 +19,7 @@ from langchain.chains import LLMChain
 app = Flask(__name__)
 CORS(app)
 
-# os.environ["OPENAI_API_KEY"] = "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"
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
-tavily = TavilyClient(api_key="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")
+tavily = TavilyClient(api_key=os.getenv("TAVILY_KEY"))
 policy_text = ""
 
 POLICY_DOCUMENT_PATH = ["sompodom_merged.pdf", "Zurich_APAC.pdf","SOMPO_Domestic.pdf"]
