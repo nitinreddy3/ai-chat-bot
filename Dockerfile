@@ -1,18 +1,13 @@
-FROM python:3.11-slim
+FROM python:3.9-slim-buster
 
 WORKDIR /app
 
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    FLASK_APP=app.py \
-    FLASK_ENV=production
-
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 5000
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
-
+CMD ["gunicorn", "--bind", ":8080", "--workers", "1", "--threads", "8", "main:app"]
