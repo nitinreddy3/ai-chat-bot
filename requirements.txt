@@ -17,3 +17,4 @@ openai==1.63.2
 PyMuPDF==1.25.3
 python-dotenv==1.0.1
 tavily-python==0.5.1
+fitz==0.0.1.dev2
