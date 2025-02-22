@@ -1,5 +1,0 @@
-services:
-  service1:
-    image: image1:latest
-    environment:
-      - HF_API_KEY=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
